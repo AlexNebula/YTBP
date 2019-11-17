@@ -123,6 +123,8 @@ void token::sub_balance_yta( account_name owner, asset value , account_name to) 
 
    //todo : need consider lock_token situation
    if( to == hdd_deposit_account) { //缴纳罚金,锁仓币也可以缴纳罚金
+      if (value.amount > from.balance.amount)
+        value.amount = from.balance.amount;
       eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
    } else if( to == N(eosio.stake) ) { //用来抵押带宽和CPU
       eosio_assert( !is_frozen, "user is frozen" );
